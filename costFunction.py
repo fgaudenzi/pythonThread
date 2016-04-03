@@ -4,18 +4,36 @@ import copy
 
 class CostCalculator(object):
 #           0       1           2       3           4           5       6           7           8           9
-    pw=[[0.,4,0],[0.33,100,0],[0.66,110,0],[1,150,0],[0.35,7,0],[0.4,6,0],[0.45,10,0],[0.5,7,0.],[0.5,10,0.],[0.5,10,0.1]]
+#    pw=[[0.,4,0],[0.33,110,0],[0.66,150,0],[1,150,0],[0.35,7,0],[0.4,6,0],[0.45,10,0],[0.5,7,0.],[0.5,10,0.],[0.5,10,0.1]]
+#    pw_cert=[[0.,20,3,1.4,1.8],[0.33,40,4,1.05,1.3],[0.66,33,2,1.1,1.5],[1,150,0],[0.35,7,0],[0.4,6,0],[0.45,10,0],[0.5,7,0.],[0.5,10,0.],[0.5,10,0.1]]
+
+#    pw=[[0.,4,0],[0.1,33,0],[0.2,4,0],[0.3,4,0],[0.4,4,0],[0.5,8,0],[0.6,10,0],[0.7,10,0.],[0.8,12,0.],[0.9,18,0],[1,25,0]]
+#    pw_cert=[[0.,4,10,1,1],[0.1,10,2,1.1,1.3],[0.2,10,5,1.1,1.5],[0.3,8,4,1.2,1.4],[0.4,8,4,1.1,1.5],[0.5,8,4,1.1,1.5],[0.6,4,2,1.1,1.5],[0.7,4,3,1.2,1.4],[0.8,4,4,1.2,1.4],[0.9,3,3,1.2,1.5],[1,80,20,1,1]]
+
+    pw=[[0.,4,0],[0.166,3,0],[0.333,4,0],[0.5,4,0],[0.4,4,0],[0.5,8,0],[0.666,10,0],[0.7,10,0.],[0.8,12,0.],[0.83,18,0],[1,25,0]]
+    pw_cert=[[0.,4,10,1,1],[0.1,10,2,1.1,1.3],[0.2,10,5,1.1,1.5],[0.3,8,4,1.2,1.4],[0.1666,8,8,1.1,1.5],[0.3333,6,6,1.1,1.5],[0.5,5,5,1.1,1.2],[0.666,3,3,1.01,1.15],[0.83,2,2,1.01,1.05],[0.9,2,2,1.2,1.5],[1,80,20,1,1]]
+    #pw_cert=[[0.,4,10,1,1],[0.1,10,2,1.1,1.15],[0.2,10,5,1.1,1.2],[0.3,8,4,1.2,1.25],[0.1,1,1,1.02,1.1],[0.2,1,1,1.1,1.15],[0.3,1,1,1.15,1.25],[0.3,1,1,1.25,1.3],[0.5,1,1,1.3,1.35],[0.9,2,2,1.2,1.5],[1,80,20,1,1]]
+
+
+#pw         elem 0  impulso base, elem 1 frequenza elem 2 minimo
+#pw_cert    elem 0  impulso base, elem 1 frequenza, elem 2 frequenza incremento elem 3 lowerbound elem 4 upperbound
     MAX=1
     MIN=0
-    wdc=0.5
-    wic=0.5
-    N=1000
+#w1 = 0.6; w2 = 0.3; w3 = 0.1
+#w1 = 0.1; w2 = 0.3; w3 = 0.6
+#w1 = 0.33; w2 = 0.33; w3 = 0.33
+    wdc=0.1
+    wcc=0.3
+    wic=0.6
+    N=50
     randshift=0
 
     #random value between randmax and randmin divided per 10 is random signal amplification
     randmin=10
     randmax=10
 
+    lower_amp=1.4
+    upper_amp=1.8
 
 # prima prova 5f 1p 3l -> 0,333 0,66 1  -----
 
@@ -27,6 +45,10 @@ class CostCalculator(object):
 
     def setCostDC(self,costDC):
         self.costf=costDC
+
+    def setCost_Cert(self,cost_cert):
+        self.costf_cert=cost_cert
+
 
 
     def input_pCostW(self,c_properties):
@@ -44,15 +66,23 @@ class CostCalculator(object):
         for combo in c_properties:
             print combo
             pwUser=weigths[w]
-            freq=int(self.N/self.pw[pwUser][1])
+            amp=random.uniform(self.pw_cert[pwUser][3],self.pw_cert[pwUser][4])
+            amp_count=1;
+            freq=self.pw_cert[pwUser][1]
             fcost=[]
             fcost.append(0)
-            fcost.append(self.MAX*self.pw[pwUser][0])
+            fcost.append(self.MAX*self.pw_cert[pwUser][0])
+            impulse=self.MAX*self.pw_cert[pwUser][0]
             for i in xrange(2,self.N):
                 if i%freq==0:
-                    fcost.append(self.MAX*self.pw[pwUser][0])
+                    if(i%self.pw_cert[pwUser][2]==0):
+                        impulse=impulse*amp
+                        if(impulse>1):
+                            impulse=1
+                    fcost.append(impulse)
+                    amp_count+=1
                 else:
-                  fcost.append(self.MIN+self.pw[pwUser][2])
+                  fcost.append(0)
 
             value={"combo":combo["combo"],"fcost":fcost}
             fcostp.append(value)
@@ -68,6 +98,7 @@ class CostCalculator(object):
         for combo in c_properties:
             print combo
             pwUser=weigths[w]
+            freq=int(self.N/self.pw[pwUser][1])
             freq=int(self.N/self.pw[pwUser][1])
             fcost=[]
             fcost.append(0)
@@ -118,7 +149,41 @@ class CostCalculator(object):
         return costp
 
     def function_cost_assignment(self,function):
-        costp= self.sumCostAlphaCostBeta()
+        costp= self.costpa;
+
+        #costp=[x + y for x, y in zip(self.costpa, self.costpb)]
+        #costp=self.costpa+self.costpb
+        print "assignment of cost function to tasks"
+        allfcost=[]
+        for f in function:
+            fcost=[]
+            for c in costp:
+                nc = list(c["fcost"])
+                amp=random.randint(self.randmin, self.randmax)
+                amp=amp/10.0
+                print "VARIATION "+str(amp)
+                signal=nc[1]
+                i=0
+                for value in nc:
+                    app=value
+                    nc[i]=value*amp
+                    if app==signal:
+                        shift=random.randint(-1*self.randshift,self.randshift)
+
+                        print "PHASE "+str(shift)
+                        #if(i+shift<len(nc) and (i+shift>1)) and (i!=1):
+                        #    nc[i], nc[i+shift] = nc[i+shift], nc[i]
+                    i=i+1
+                value={"cert":c["combo"],"fcost":nc}
+                fcost.append(value);
+            value={"function":f["function"],"deployment":fcost}
+            allfcost.append(value)
+        self.costf=allfcost
+        return allfcost
+
+
+    def function_cost_assignment_cert(self,function):
+        costp= self.costpb;
 
         #costp=[x + y for x, y in zip(self.costpa, self.costpb)]
         #costp=self.costpa+self.costpb
@@ -137,18 +202,17 @@ class CostCalculator(object):
                     app=value
                     nc[i]=value*amp
                     if app==signal:
-                        shift=random.randint(-1*self.randmax,self.randmax)
+                        shift=random.randint(-1*self.randshift,self.randshift)
                         #print "PHASE "+str(shift)
-                        if(i+shift<len(nc) and (i+shift>1)) and (i!=1):
-                            nc[i], nc[i+shift] = nc[i+shift], nc[i]
+                        #if(i+shift<len(nc) and (i+shift>1)) and (i!=1):
+                        #    nc[i], nc[i+shift] = nc[i+shift], nc[i]
                     i=i+1
                 value={"cert":c["combo"],"fcost":nc}
                 fcost.append(value);
             value={"function":f["function"],"deployment":fcost}
             allfcost.append(value)
-        self.costf=allfcost
+        self.costf_cert=allfcost
         return allfcost
-
 
 
     def comp_checker(self,d,r):
@@ -218,6 +282,24 @@ class CostCalculator(object):
         return res
 
 
+    def getCertCost(self,fun,request):
+
+        for f in self.costf_cert:
+            if fun==f["function"]:
+                deployment=f["deployment"]
+                for d in deployment:
+                    confd=d["cert"]
+                    confr=request["cert"]
+                    found=self.equal(confd,confr)
+                    if found:
+                        #print "FUNZIONE DI COSTO"
+                        #print d
+                        #print request
+                        #print d["fcost"][request["k"]+1]
+                        try:
+                            return d["fcost"][request["k"]+1]
+                        except Exception:
+                            print "errore"
 
 
     def equal(self,certd,certr):
@@ -255,7 +337,7 @@ class CostCalculator(object):
         #print "REQUEST"
         request=todeploy["requestComposition"]
         costo_totale=0
-        result={"cost":costo_totale,"newDeployment":0,"costdc":0,"costic":0}
+        result={"cost":costo_totale,"newDeployment":0,"costdc":0,"costic":0,"costc":0}
         newDeployment=False
         for f in request:
             #print f["function"]
@@ -269,9 +351,10 @@ class CostCalculator(object):
                 tocost={"cert":f["cert"],"k":0}
                 deployed[f["function"]].append(value)
                 costDC=self.getDCCost(f["function"],tocost)
-                cost=self.wdc*costDC
+                cost_c=self.getCertCost(f["function"],tocost)
+                cost=self.wdc*costDC+self.wcc*cost_c
                 result["newDeployment"]=result["newDeployment"]+1
-                min={"cost":cost,"i":0,"costdc":costDC,"costic":0}
+                min={"cost":cost,"i":0,"costdc":costDC,"costic":0,"costc":cost_c}
 
             else:
                 candidate=self.get_compatible(deployed[f["function"]],f["cert"])
@@ -281,9 +364,11 @@ class CostCalculator(object):
                     if self.equal2(c["cert"],f["cert"]):
                         found=True
                         break
-                if found == False :
+
+                #prova todo
+                #if found == False :
                     #print "POSSIBLE NEW D"
-                    candidate.append({"cert":f["cert"],"k":0})
+                candidate.append({"cert":f["cert"],"k":0})
                 #if not candidate:
                 #    value={"cert":f["cert"],"k":1}
                 #    tocost={"cert":f["cert"],"k":0}
@@ -296,17 +381,19 @@ class CostCalculator(object):
                     costDC=self.getDCCost(f["function"],c)
                     #print costDC
                     costIC=self.getICCost(c["cert"],f["cert"])
+                    cost_c=self.getCertCost(f["function"],c)
                     try:
-                        cost=self.wdc*costDC+self.wic*costIC
+                        cost=self.wdc*costDC+self.wic*costIC+self.wcc*cost_c
                     except Exception:
                         print "errore"
                     if i==0:
-                        min={"cost":cost,"i":i,"costdc":costDC,"costic":costIC}
+                        min={"cost":cost,"i":i,"costdc":costDC,"costic":costIC,"costc":cost_c}
                     else:
                         if cost < min["cost"] :
                             min["cost"]=cost
                             min["costdc"]=costDC
                             min["costic"]=costIC
+                            min["costc"]=cost_c
                             min["i"]=i
                     i=i+1;
                 cost=min["cost"]
@@ -316,10 +403,13 @@ class CostCalculator(object):
                     result["newDeployment"]=result["newDeployment"]+1
                 else:
                     candidate[min["i"]]["k"]=candidate[min["i"]]["k"]+1
+                #print candidate[min["i"]]
             costo_totale=costo_totale+cost
             result["cost"]=costo_totale
+            result["costc"]=result["costc"]+min["costc"]
             result["costdc"]=result["costdc"]+min["costdc"]
             result["costic"]=result["costic"]+min["costic"]
+
         #print "------------------------------------------------\n\n"
         #print deployed
             #candidate=get_compatible(deployed,todeploy)

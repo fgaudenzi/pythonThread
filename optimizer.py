@@ -5,7 +5,7 @@ from loader import printAverageDeployment, printCostf
 from datetime import datetime
 from multiprocessing import Pool
 
-nproc=12
+nproc=20
 
 def minT(risultato):
 
@@ -38,8 +38,8 @@ def multiT(listrequest):
                     #print cost["newDeployment"]
                     density=density+cost["cost"]
                     cost["costT"]=density
-                    costlist.append(density)
-                    result.append(cost)
+                    #costlist.append(density)
+                    #result.append(cost)
                     #print "-->"
                     #print deployed
 
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     app.setCostDC(costf)
     for i in xrange(0,1):
         sequence = json.loads(open('dataset/dataset-'+str(i)+'.json').read())
-        for i in xrange(1,10,2):
+        for i in xrange(11,12):
             start=datetime.now()
             print "number of request:"+str(i)
             print "calcolo permutazioni"
@@ -92,16 +92,27 @@ if __name__ == '__main__':
             #[1,2,3], [2,1,3]
             list2pool=[]
             p = Pool(processes=nproc)
-            risultato=p.map(multiT,subsequences)
+            lung=len(subsequences)
+            #max  10Million
+            nsec=4
+            print "0 TO "+ str(lung/nsec)
+            risultato=p.map(multiT,subsequences[:(lung/nsec)])
+            for div in xrange(1,nsec):
+                print "TAGLIATO"
+                print str((lung/nsec)*div+1)+" TO "+str((lung/nsec)*(div+1))
+                risultato.extend(p.map(multiT,subsequences[(lung/nsec)*div+1:(lung/nsec)*(div+1)]))
+            print str((lung/nsec)*div+1)+" TO"+str(lung)
+            risultato.extend(p.map(multiT,subsequences[((lung/nsec)*div+1):lung]))
             print datetime.now()-start
             start=datetime.now()
-            print "calcolo minimi"
+            print "index per minimi"
             minimi=[]
             ind=0
             nminimi=lung/nproc
             checker=lung%nproc
             if(checker!=0):
                 nminimi += 1
+            print "nm"+str(nminimi)
             while(ind<lung-nminimi):
                 ind=ind+nminimi
                 minimi.append(risultato[ind-nminimi:ind])

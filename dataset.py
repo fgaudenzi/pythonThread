@@ -110,13 +110,3 @@ def load_functionality(file):
         #p=1.0/len(combo_P)
         return res
 
-if __name__ == '__main__':
-    prop=get_property_card("data/property.json")
-    i=1
-
-    res=load_functionalityALL("data/function.json",prop)
-    #ris=get_combination_FP(res,prop)
-    #for r in ris:
-    #    print i
-    #    i=i+1
-    #    print ris

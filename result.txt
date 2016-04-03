@@ -1,0 +1,132 @@
+GLPSOL: GLPK LP/MIP Solver, v4.57
+Parameter(s) specified in the command line:
+ -m deploy.mod -d dati.dat
+Reading model section from deploy.mod...
+deploy.mod:29: warning: unexpected end of file; missing end statement inserted
+29 lines were read
+Reading data section from dati.dat...
+dati.dat:539: warning: unexpected end of file; missing end statement inserted
+539 lines were read
+Generating v...
+Generating capacity...
+Generating assign...
+Generating fixtozero...
+Model has been successfully generated
+GLPK Integer Optimizer, v4.57
+30020 rows, 30570 columns, 91040 non-zeros
+30570 integer variables, all of which are binary
+Preprocessing...
+29970 hidden packing inequaliti(es) were detected
+30019 rows, 30570 columns, 90820 non-zeros
+30570 integer variables, all of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
+Problem data seem to be well scaled
+Constructing initial basis...
+Size of triangular part is 30019
+Solving LP relaxation...
+GLPK Simplex Optimizer, v4.57
+30019 rows, 30570 columns, 90820 non-zeros
+      0: obj =   3.564000000e+00 inf =   1.900e+01 (1)
+     19: obj =   4.564000000e+00 inf =   0.000e+00 (0)
+*   500: obj =   8.544886878e-02 inf =   0.000e+00 (29478) 3
+*  1000: obj =   4.212126361e-02 inf =   0.000e+00 (28980) 4
+*  1500: obj =   4.073571636e-02 inf =   0.000e+00 (12588) 1
+*  2000: obj =   4.073571636e-02 inf =   0.000e+00 (12097)
+*  2500: obj =   4.073571636e-02 inf =   0.000e+00 (11597)
+*  3000: obj =   4.073571636e-02 inf =   0.000e+00 (11106)
+*  3500: obj =   4.073571636e-02 inf =   0.000e+00 (10606)
+*  4000: obj =   4.073571636e-02 inf =   0.000e+00 (10115)
+*  4500: obj =   4.073571636e-02 inf =   0.000e+00 (9624)
+*  5000: obj =   4.073571636e-02 inf =   0.000e+00 (9124)
+*  5500: obj =   3.864352185e-02 inf =   0.000e+00 (16594)
+*  6000: obj =   3.538911078e-02 inf =   0.000e+00 (24022) 1
+*  6500: obj =   3.508709209e-02 inf =   0.000e+00 (23518)
+*  7000: obj =   3.508709209e-02 inf =   0.000e+00 (23026)
+*  7500: obj =   3.508709209e-02 inf =   0.000e+00 (22534)
+*  8000: obj =   3.473389737e-02 inf =   0.000e+00 (16771)
+*  8500: obj =   3.450761391e-02 inf =   0.000e+00 (21601) 1
+*  9000: obj =   3.220869792e-02 inf =   0.000e+00 (21096) 1
+*  9500: obj =   3.011653691e-02 inf =   0.000e+00 (20588) 1
+* 10000: obj =   2.836315905e-02 inf =   0.000e+00 (20093) 1
+* 10500: obj =   2.572793813e-02 inf =   0.000e+00 (17817) 4
+* 11000: obj =   2.330620874e-02 inf =   0.000e+00 (17344) 5
+* 11500: obj =   2.206933312e-02 inf =   0.000e+00 (18617) 5
+* 12000: obj =   2.113774586e-02 inf =   0.000e+00 (18148) 5
+* 12500: obj =   2.027135986e-02 inf =   0.000e+00 (17601) 4
+* 13000: obj =   1.949214831e-02 inf =   0.000e+00 (17144) 5
+* 13500: obj =   1.882911497e-02 inf =   0.000e+00 (16653) 5
+* 14000: obj =   1.837932063e-02 inf =   0.000e+00 (16143) 5
+* 14500: obj =   1.797315436e-02 inf =   0.000e+00 (15617) 5
+* 15000: obj =   1.760455962e-02 inf =   0.000e+00 (15128) 5
+* 15500: obj =   1.726361374e-02 inf =   0.000e+00 (14653) 4
+* 16000: obj =   1.666584060e-02 inf =   0.000e+00 (14148) 4
+* 16500: obj =   1.614836520e-02 inf =   0.000e+00 (13653) 4
+* 17000: obj =   1.569937328e-02 inf =   0.000e+00 (13162) 5
+* 17500: obj =   1.530884075e-02 inf =   0.000e+00 (12623) 4
+* 18000: obj =   1.497533952e-02 inf =   0.000e+00 (12148) 4
+* 18500: obj =   1.467580314e-02 inf =   0.000e+00 (11621) 4
+* 19000: obj =   1.441271302e-02 inf =   0.000e+00 (11133) 4
+* 19500: obj =   1.417982927e-02 inf =   0.000e+00 (10653) 4
+* 20000: obj =   1.397029445e-02 inf =   0.000e+00 (10153) 4
+* 20500: obj =   1.377587140e-02 inf =   0.000e+00 (9636) 4
+* 21000: obj =   1.360242669e-02 inf =   0.000e+00 (9133) 4
+* 21500: obj =   1.351067049e-02 inf =   0.000e+00 (8653) 4
+* 22000: obj =   1.344627027e-02 inf =   0.000e+00 (8153) 3
+* 22500: obj =   1.338878772e-02 inf =   0.000e+00 (7653) 4
+* 23000: obj =   1.333716505e-02 inf =   0.000e+00 (7153) 4
+* 23500: obj =   1.329266667e-02 inf =   0.000e+00 (6653) 3
+* 24000: obj =   1.325017219e-02 inf =   0.000e+00 (6153) 4
+* 24500: obj =   1.321144304e-02 inf =   0.000e+00 (5653) 3
+* 25000: obj =   1.317600000e-02 inf =   0.000e+00 (5153) 4
+* 25500: obj =   1.310349595e-02 inf =   0.000e+00 (4655) 1
+* 26000: obj =   1.304229318e-02 inf =   0.000e+00 (4155) 1
+* 26500: obj =   1.299058905e-02 inf =   0.000e+00 (3655) 1
+* 27000: obj =   1.294660519e-02 inf =   0.000e+00 (3104) 1
+* 27500: obj =   1.290825806e-02 inf =   0.000e+00 (2604) 1
+* 28000: obj =   1.287474055e-02 inf =   0.000e+00 (2104) 1
+* 28500: obj =   1.284519431e-02 inf =   0.000e+00 (1604) 2
+* 29000: obj =   1.281895302e-02 inf =   0.000e+00 (1104) 1
+* 29500: obj =   1.279549153e-02 inf =   0.000e+00 (604) 1
+* 30000: obj =   1.277439034e-02 inf =   0.000e+00 (104) 1
+* 30080: obj =   1.277200000e-02 inf =   0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
++ 30080: mip =     not found yet >=              -inf        (1; 0)
++ 30080: mip =     not found yet >=   1.277200000e-02        (2; 0)
++ 30089: mip =     not found yet >=   1.277200000e-02        (3; 0)
++ 30097: mip =     not found yet >=   1.277200000e-02        (4; 0)
++ 30105: mip =     not found yet >=   1.277200000e-02        (5; 0)
++ 30114: mip =     not found yet >=   1.277200000e-02        (6; 0)
+Time used: 66.4 secs.  Memory used: 74.0 Mb.
++ 30123: mip =     not found yet >=   1.277200000e-02        (7; 0)
++ 30142: mip =     not found yet >=   1.277200000e-02        (8; 0)
++ 30143: mip =     not found yet >=   1.277200000e-02        (9; 0)
++ 30162: mip =     not found yet >=   1.277200000e-02        (10; 0)
++ 30163: mip =     not found yet >=   1.277200000e-02        (11; 0)
++ 30165: mip =     not found yet >=   1.277200000e-02        (12; 0)
++ 30166: mip =     not found yet >=   1.277200000e-02        (13; 0)
+Time used: 133.3 secs.  Memory used: 74.2 Mb.
++ 30175: mip =     not found yet >=   1.277200000e-02        (14; 0)
++ 30178: mip =     not found yet >=   1.277200000e-02        (14; 1)
++ 30179: mip =     not found yet >=   1.277200000e-02        (15; 1)
++ 30181: mip =     not found yet >=   1.277200000e-02        (16; 1)
++ 30184: mip =     not found yet >=   1.277200000e-02        (17; 1)
++ 30189: mip =     not found yet >=   1.277200000e-02        (18; 1)
++ 30200: mip =     not found yet >=   1.277200000e-02        (19; 1)
++ 30201: mip =     not found yet >=   1.277200000e-02        (20; 1)
+Time used: 195.3 secs.  Memory used: 74.4 Mb.
++ 30212: mip =     not found yet >=   1.277200000e-02        (21; 1)
++ 30213: mip =     not found yet >=   1.277200000e-02        (22; 1)
++ 30224: mip =     not found yet >=   1.277200000e-02        (23; 1)
++ 30225: mip =     not found yet >=   1.277200000e-02        (24; 1)
++ 30232: mip =     not found yet >=   1.277200000e-02        (26; 1)
++ 30239: mip =     not found yet >=   1.277200000e-02        (27; 1)
++ 30741: mip =     not found yet >=   1.277200000e-02        (28; 1)
++ 30742: mip =     not found yet >=   1.277200000e-02        (29; 1)
++ 30743: mip =     not found yet >=   1.277200000e-02        (30; 1)
+Time used: 256.0 secs.  Memory used: 74.6 Mb.
++ 30751: mip =     not found yet >=   1.277200000e-02        (32; 1)
++ 30759: mip =     not found yet >=   1.277200000e-02        (34; 1)
++ 30760: mip =     not found yet >=   1.277200000e-02        (35; 1)
++ 30765: mip =     not found yet >=   1.277200000e-02        (37; 1)

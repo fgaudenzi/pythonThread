@@ -1,12 +1,13 @@
 import json
 
-costf=json.loads(open('costf.json').read())
+costf=json.loads(open('dataset/costf.json').read())
 for f in costf:
     print f["function"]
     for d in f["deployment"]:
-        #print d
-        i=0
+        print d["cert"][0]["rank"]
+        i=1
         for value in d["fcost"]:
-            if value!=0:
-                print i
+            #if value!=0:
+            print str(value)
             i=i+1
+        print "------------------"
